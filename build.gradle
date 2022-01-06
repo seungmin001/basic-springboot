@@ -13,6 +13,7 @@ buildscript {
 plugins {
     id 'java'
     id 'eclipse'
+    id "io.freefair.lombok" version "6.3.0"
 }
 
 apply plugin : 'org.springframework.boot'
@@ -30,6 +31,8 @@ dependencies {
     testImplementation 'junit:junit:4.13.1'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    testImplementation 'org.hamcrest:hamcrest:2.2'
 }
 
 test {
