@@ -1,5 +1,6 @@
 package com.example.smspring.springboot.domain.posts;
 
+import com.example.smspring.springboot.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import javax.persistence.*;
 @Getter //lombok
 @NoArgsConstructor //lombok 기본생성자 자동 추가
 @Entity //Table posts table로 match
-public class Posts {
+public class Posts extends BaseTimeEntity {
 
     @Id //PK
     @GeneratedValue(strategy = GenerationType.IDENTITY) //auto_increment
