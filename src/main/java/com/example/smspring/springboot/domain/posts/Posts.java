@@ -31,6 +31,11 @@ public class Posts {
         this.author = author;
     }
 
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
     //Entity 클래스에는 절대 Setter를 추가하지 않는다! 필드 값 변경이 필요하다면 목적이 명확한 메소드를 추가해야한다.
     //생성자(Builder)를 통해 최종값으로 채운 후 DB에 insert, 값 변경 시 public 메소드이용.
 }
