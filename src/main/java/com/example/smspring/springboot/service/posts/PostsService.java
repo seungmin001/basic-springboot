@@ -2,12 +2,16 @@ package com.example.smspring.springboot.service.posts;
 
 import com.example.smspring.springboot.domain.posts.Posts;
 import com.example.smspring.springboot.domain.posts.PostsRepository;
+import com.example.smspring.springboot.web.dto.PostsListResponseDto;
 import com.example.smspring.springboot.web.dto.PostsResponseDto;
 import com.example.smspring.springboot.web.dto.PostsSaveRequestDto;
 import com.example.smspring.springboot.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -32,10 +36,20 @@ public class PostsService {
         return id;
     }
 
+    @Transactional(readOnly = true)
     public PostsResponseDto findById(Long id) {
         Posts entity = postsRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id=" + id));
 
         return new PostsResponseDto(entity);
+    }
+
+    @Transactional(readOnly = true) // transaction 범위는 유지하되 조회 기능만 남겨두어 속도 개선
+    public List<PostsListResponseDto> findAllDesc(){
+        return postsRepository.findAllDesc()
+                .stream()
+                // 지정한 타입의 객체 new로 생성하여 mapping // (posts -> new PostsListResponseDto(posts)) 와 같음
+                .map(PostsListResponseDto::new)
+                .collect(Collectors.toList());
     }
 }
