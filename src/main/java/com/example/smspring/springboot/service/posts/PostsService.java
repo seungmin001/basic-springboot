@@ -36,6 +36,14 @@ public class PostsService {
         return id;
     }
 
+    @Transactional
+    public void delete(Long id) {
+        Posts posts = postsRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id=" + id)); //entity 존재 확인
+
+        postsRepository.delete(posts); // JPA delete 메소드 활용 . deleteById 도 가능
+    }
+
     @Transactional(readOnly = true)
     public PostsResponseDto findById(Long id) {
         Posts entity = postsRepository.findById(id)
@@ -45,7 +53,7 @@ public class PostsService {
     }
 
     @Transactional(readOnly = true) // transaction 범위는 유지하되 조회 기능만 남겨두어 속도 개선
-    public List<PostsListResponseDto> findAllDesc(){
+    public List<PostsListResponseDto> findAllDesc() {
         return postsRepository.findAllDesc()
                 .stream()
                 // 지정한 타입의 객체 new로 생성하여 mapping // (posts -> new PostsListResponseDto(posts)) 와 같음
