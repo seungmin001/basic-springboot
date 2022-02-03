@@ -43,7 +43,8 @@ public class OAuthAttributes {
                 .build();
     }
 
-    private static OAuthAttributes ofNaver(String userNameAttributeName, Map<String, Object> attributes) {
+    private static OAuthAttributes ofNaver(String userNameAttributeName, Map<String, Object> attributes) { //
+        // Naver가 반환하는 최상위 필드 중 response가 회원정보를 json으로 저장하고 있음 //따라서 구글과 달리 response에서 값을 얻어냄
         Map<String, Object> response = (Map<String, Object>) attributes.get("response");
 
         return OAuthAttributes.builder()
