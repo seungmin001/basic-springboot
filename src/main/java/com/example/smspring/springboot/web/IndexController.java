@@ -1,5 +1,6 @@
 package com.example.smspring.springboot.web;
 
+import com.example.smspring.springboot.config.auth.LoginUser;
 import com.example.smspring.springboot.config.auth.dto.SessionUser;
 import com.example.smspring.springboot.domain.user.User;
 import com.example.smspring.springboot.service.posts.PostsService;
@@ -20,9 +21,9 @@ public class IndexController {
     private final HttpSession httpSession;
 
     @GetMapping("/")
-    public String index(Model model) { // model : 서버 템플릿 엔진에서 사용할 수 있는 객체
+    public String index(Model model, @LoginUser SessionUser user) { // model : 서버 템플릿 엔진에서 사용할 수 있는 객체  // CustomOAuth~에서 저장한 것 가져오기 // 세션 정보 추출 annotation으로 통일화
         model.addAttribute("posts", postsService.findAllDesc()); // find결과를 index.mustache에 전달하도록
-        SessionUser user = (SessionUser) httpSession.getAttribute("user"); // CustomOAuth~에서 저장한 것 가져오기
+
         if(user!=null){ // 세션에 값이 있을 때만 모델에 등록. model에 값이 없으면 로그인 버튼이 보이게 됨
             model.addAttribute("userName", user.getName());
         }
